@@ -12,6 +12,7 @@
 
 @interface AppDelegate (FCMPlugin)
 
+- (void)doRegisterForRemoteNotifications;
 + (NSData*)getLastPush;
 
 @end
