@@ -1,3 +1,6 @@
+Changes on this fork:
+- Use FCMPlugin.registerForRemoteNotifications() for registering notification manually. It enables the app to control when the notification permission pop up will appear.
+
 # Google Firebase Cloud Messaging Cordova Push Plugin
 > Extremely easy plug&play push notification plugin for Cordova applications with Google Firebase FCM.
 
