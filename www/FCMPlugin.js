@@ -4,6 +4,11 @@ function FCMPlugin() {
 	console.log("FCMPlugin.js: is created");
 }
 
+// REGISTER NOTIFICATIONS //
+FCMPlugin.prototype.registerForRemoteNotifications = function( success, error ){
+	exec(success, error, "FCMPlugin", 'registerForRemoteNotifications',[]);
+}
+
 // SUBSCRIBE TO TOPIC //
 FCMPlugin.prototype.subscribeToTopic = function( topic, success, error ){
 	exec(success, error, "FCMPlugin", 'subscribeToTopic', [topic]);
