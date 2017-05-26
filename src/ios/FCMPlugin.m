@@ -17,6 +17,7 @@ static BOOL appInForeground = YES;
 
 static NSString *notificationCallback = @"FCMPlugin.onNotificationReceived";
 static NSString *tokenRefreshCallback = @"FCMPlugin.onTokenRefreshReceived";
+static NSString *setLocationPermissionCallback = @"FCMPlugin.onSetLocationPermission";
 static FCMPlugin *fcmPluginInstance;
 
 + (FCMPlugin *) fcmPlugin {
@@ -138,6 +139,15 @@ static FCMPlugin *fcmPluginInstance;
         [FCMPlugin.fcmPlugin notifyOfMessage:lastPush];
     }
     appInForeground = YES;
+}
+
+- (void)onSetLocationPermission:(BOOL)allowed {
+    NSString * js = [NSString stringWithFormat:@"%@(%@);", setLocationPermissionCallback, allowed ? @"true" : @"false"];
+    if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
+        [(UIWebView *)self.webView stringByEvaluatingJavaScriptFromString:js];
+    } else {
+        [self.webViewEngine evaluateJavaScript:js completionHandler:nil];
+    }
 }
 
 @end

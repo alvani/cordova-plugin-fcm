@@ -17,5 +17,6 @@
 - (void)notifyOfTokenRefresh:(NSString*) token;
 - (void)appEnterBackground;
 - (void)appEnterForeground;
+- (void)onSetLocationPermission:(BOOL)allowed;
 
 @end

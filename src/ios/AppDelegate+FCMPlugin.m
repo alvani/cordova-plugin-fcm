@@ -77,6 +77,8 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
         // iOS 8 or later
         // [START register_for_notifications]
         if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppBecomeActive)     name:UIApplicationDidBecomeActiveNotification object:nil];
+            
             UIUserNotificationType allNotificationTypes =
             (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
             UIUserNotificationSettings *settings =
@@ -90,6 +92,9 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
             | UNAuthorizationOptionSound
             | UNAuthorizationOptionBadge;
             [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authOptions completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                   [FCMPlugin.fcmPlugin onSetLocationPermission:granted]; 
+                });
             }];
             
             // For iOS 10 display notification (sent via APNS)
@@ -102,6 +107,13 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
         [[UIApplication sharedApplication] registerForRemoteNotifications];
         // [END register_for_notifications]
     }
+}
+
+- (void)onAppBecomeActive {
+    UIUserNotificationSettings *settings = [UIApplication sharedApplication].currentUserNotificationSettings;
+    NSLog(@"UIUserNotificationSettings %ld", settings.types);
+    [FCMPlugin.fcmPlugin onSetLocationPermission:settings.types != UIUserNotificationTypeNone];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 // [START message_handling]
