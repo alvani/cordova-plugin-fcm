@@ -93,7 +93,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
             | UNAuthorizationOptionBadge;
             [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authOptions completionHandler:^(BOOL granted, NSError * _Nullable error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                   [FCMPlugin.fcmPlugin onSetLocationPermission:granted]; 
+                   [FCMPlugin.fcmPlugin onSetPushPermission:granted];
                 });
             }];
             
@@ -112,7 +112,7 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 - (void)onAppBecomeActive {
     UIUserNotificationSettings *settings = [UIApplication sharedApplication].currentUserNotificationSettings;
     NSLog(@"UIUserNotificationSettings %ld", settings.types);
-    [FCMPlugin.fcmPlugin onSetLocationPermission:settings.types != UIUserNotificationTypeNone];
+    [FCMPlugin.fcmPlugin onSetPushPermission:settings.types != UIUserNotificationTypeNone];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
