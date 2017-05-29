@@ -57,6 +57,14 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     // Add observer for InstanceID token refresh callback.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:)
                                                  name:kFIRInstanceIDTokenRefreshNotification object:nil];
+    
+#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+    // For iOS 10 display notification (sent via APNS)
+    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+    // For iOS 10 data message (sent via FCM)
+    [FIRMessaging messaging].remoteMessageDelegate = self;
+#endif
+    
     return YES;
 }
 
@@ -97,10 +105,10 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
                 });
             }];
             
-            // For iOS 10 display notification (sent via APNS)
-            [UNUserNotificationCenter currentNotificationCenter].delegate = self;
-            // For iOS 10 data message (sent via FCM)
-            [FIRMessaging messaging].remoteMessageDelegate = self;
+//            // For iOS 10 display notification (sent via APNS)
+//            [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+//            // For iOS 10 data message (sent via FCM)
+//            [FIRMessaging messaging].remoteMessageDelegate = self;
 #endif
         }
         
