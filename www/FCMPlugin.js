@@ -1,3 +1,4 @@
+cordova.define("cordova-plugin-fcm.FCMPlugin", function(require, exports, module) {
 var exec = require('cordova/exec');
 
 function FCMPlugin() { 
@@ -7,6 +8,10 @@ function FCMPlugin() {
 // REGISTER NOTIFICATIONS //
 FCMPlugin.prototype.registerForRemoteNotifications = function( success, error ){
 	exec(success, error, "FCMPlugin", 'registerForRemoteNotifications',[]);
+}
+
+FCMPlugin.prototype.isPushNotificationEnabled = function( success, error ){
+	exec(success, error, "FCMPlugin", 'isPushNotificationEnabled',[]);
 }
 
 // SUBSCRIBE TO TOPIC //
@@ -50,3 +55,5 @@ exec(function(result){ console.log("FCMPlugin Ready OK") }, function(result){ co
 
 var fcmPlugin = new FCMPlugin();
 module.exports = fcmPlugin;
+
+});
