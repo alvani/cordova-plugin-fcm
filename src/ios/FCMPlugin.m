@@ -150,4 +150,11 @@ static FCMPlugin *fcmPluginInstance;
     }
 }
 
+- (void)isPushNotificationEnabled:(CDVInvokedUrlCommand*)command {
+    BOOL result = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+    CDVPluginResult* pluginResult = nil;
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:result];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 @end

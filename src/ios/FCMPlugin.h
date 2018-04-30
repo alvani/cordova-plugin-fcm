@@ -18,5 +18,6 @@
 - (void)appEnterBackground;
 - (void)appEnterForeground;
 - (void)onSetPushPermission:(BOOL)allowed;
+- (void)isPushNotificationEnabled:(CDVInvokedUrlCommand*)command;
 
 @end
