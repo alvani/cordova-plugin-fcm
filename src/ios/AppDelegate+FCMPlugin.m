@@ -118,10 +118,14 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 }
 
 - (void)onAppBecomeActive {
-    UIUserNotificationSettings *settings = [UIApplication sharedApplication].currentUserNotificationSettings;
-    NSLog(@"UIUserNotificationSettings %ld", settings.types);
-    [FCMPlugin.fcmPlugin onSetPushPermission:settings.types != UIUserNotificationTypeNone];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIUserNotificationSettings *settings = [UIApplication sharedApplication].currentUserNotificationSettings;
+        NSLog(@"UIUserNotificationSettings %ld", settings.types);
+        [FCMPlugin.fcmPlugin onSetPushPermission:settings.types != UIUserNotificationTypeNone];
+        
+    });
 }
 
 // [START message_handling]
