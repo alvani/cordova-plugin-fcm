@@ -1,3 +1,4 @@
+cordova.define("cordova-plugin-fcm.FCMPlugin", function(require, exports, module) {
 var exec = require('cordova/exec');
 
 function FCMPlugin() { 
@@ -35,6 +36,10 @@ FCMPlugin.prototype.getToken = function( success, error ){
 	exec(success, error, "FCMPlugin", 'getToken', []);
 }
 
+FCMPlugin.prototype.deleteToken = function( success, error ){
+	exec(success, error, "FCMPlugin", 'deleteToken', []);
+}
+
 // DEFAULT NOTIFICATION CALLBACK //
 FCMPlugin.prototype.onNotificationReceived = function(payload){
 	console.log("Received push notification")
@@ -54,3 +59,4 @@ exec(function(result){ console.log("FCMPlugin Ready OK") }, function(result){ co
 
 var fcmPlugin = new FCMPlugin();
 module.exports = fcmPlugin;
+});

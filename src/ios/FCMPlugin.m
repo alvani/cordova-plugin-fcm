@@ -50,6 +50,19 @@ static FCMPlugin *fcmPluginInstance;
     }];
 }
 
+- (void)deleteToken:(CDVInvokedUrlCommand *)command
+{
+    NSLog(@"delete Token");
+    
+    [[FIRInstanceID instanceID] deleteIDWithHandler:^(NSError * _Nullable error) {
+        NSLog(@"token deleted");
+        CDVPluginResult* pluginResult = nil;
+        NSString* result = error ? [error localizedDescription] : @"OK";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+}
+
 // UN/SUBSCRIBE TOPIC //
 - (void) registerForRemoteNotifications:(CDVInvokedUrlCommand *)command 
 {
