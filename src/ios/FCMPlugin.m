@@ -56,6 +56,7 @@ static FCMPlugin *fcmPluginInstance;
     
     [[FIRInstanceID instanceID] deleteIDWithHandler:^(NSError * _Nullable error) {
         NSLog(@"token deleted");
+        NSString *refreshedToken = [[FIRInstanceID instanceID] token];
         CDVPluginResult* pluginResult = nil;
         NSString* result = error ? [error localizedDescription] : @"OK";
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
